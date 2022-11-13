@@ -4,9 +4,7 @@ bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Schedule = require("./src/schedule.model");
 const scheduleStub = require("./src/schedule.stub");
-const { MongoClient, ObjectId } = require("mongodb");
-const dbURI =
-  "mongodb://john-wilburn:5n2qyZGDw0jWqY67ppiorvbADPVtauzgix5xNdPK7EajH0qMQsWHjmH6bsrWGzEHEjY3h0kFiKC0ACDbsHSGCQ==@john-wilburn.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@john-wilburn@";
+const dbURI = process.env.MONGO_URI;
 
 const app = express();
 app.use(bodyParser.json());

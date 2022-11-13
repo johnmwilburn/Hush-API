@@ -11,7 +11,8 @@ app.use(bodyParser.json());
 async function main() {
   await mongoose.connect(process.env.MONGO_URI);
 
-  // Schedule.deleteMany();
+  const doc = Schedule(scheduleStub);
+  doc.save();
 
   getSchedule();
   changeEventStatus();
@@ -33,7 +34,7 @@ const changeScheduleStatus = async (req, res) => {
   const currentSchedule = schedules[schedules.length - 1];
 
   if (!currentSchedule) {
-    return console.log("bla error handling"); //res.status(400);
+    return; //res.status(400);
   }
 
   switch (reqBody.command) {
@@ -70,7 +71,7 @@ const changeEventStatus = async (req, res) => {
   const currentSchedule = schedules[schedules.length - 1];
 
   if (!currentSchedule) {
-    return console.log("bla error handling"); //res.status(400);
+    return; //res.status(400);
   }
 
   for (i = 0; i < currentSchedule.events.length; i++) {
@@ -90,7 +91,7 @@ const getSchedule = async (req, res) => {
   const currentSchedule = schedules[schedules.length - 1];
 
   if (!currentSchedule) {
-    return console.log("bla error handling"); //res.status(400);
+    return; //res.status(400);
   }
 
   console.log("GET SCHEDULE", currentSchedule);

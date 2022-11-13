@@ -7,6 +7,11 @@ const scheduleStub = require("./src/schedule.stub");
 const dbURI = process.env.MONGO_URI;
 
 const app = express();
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {

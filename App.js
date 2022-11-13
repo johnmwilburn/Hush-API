@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const Schedule = require("./src/schedule.model");
+const scheduleStub = require("./src/schedule.stub");
 
 const app = express();
 
@@ -23,15 +24,8 @@ app.delete("/", (req, res) => {
 
 async function main() {
   await mongoose.connect(process.env.MONGO_URI);
-  const doc = new Schedule();
-  let event = {
-    busy: true,
-    from: "10:30",
-    to: "11:00",
-    name: "MyEvent",
-    eventUUID: "blabla",
-  };
-  doc.events.push(event);
+  const doc = new Schedule(scheduleStub);
+
   await doc.save();
 
   const schedules = await Schedule.find({});

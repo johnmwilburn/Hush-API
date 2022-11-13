@@ -85,7 +85,7 @@ const changeEventStatus = async (req, res) => {
   const currentSchedule = schedules[schedules.length - 1];
 
   if (!currentSchedule) {
-    return res.status(400);
+    return res.status(400).send("No schedules found");
   }
 
   let events = currentSchedule.events;
@@ -107,7 +107,7 @@ const getSchedule = async (req, res) => {
   let currentSchedule = schedules[schedules.length - 1];
 
   if (!currentSchedule) {
-    return res.status(400);
+    return res.status(400).send("No schedules found");
   }
 
   let events = currentSchedule.events;

@@ -19,6 +19,7 @@ async function main() {
 }
 
 const changeScheduleStatus = async (req, res) => {
+  console.log("Received request for changschedulestatus");
   const reqBody = { command: "hush" };
 
   if (!reqBody?.command) {
@@ -56,6 +57,7 @@ const changeScheduleStatus = async (req, res) => {
 };
 
 const changeEventStatus = async (req, res) => {
+  console.log("Received request for changeventstatus");
   const reqBody = { eventUUID: "1", status: "busy" };
 
   if (!(reqBody?.eventUUID && reqBody?.status)) {
@@ -81,6 +83,7 @@ const changeEventStatus = async (req, res) => {
 };
 
 const getSchedule = async (req, res) => {
+  console.log("Received request for getSchedule");
   const schedules = await Schedule.find({});
   const currentSchedule = schedules[schedules.length - 1];
 

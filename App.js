@@ -122,6 +122,7 @@ const getSchedule = async (req, res) => {
   if (trimmedEvents.length != 0) {
     if (trimmedEvents[0].from > Date.now()) {
       currentSchedule.state = "free";
+      console.log("Setting next change to: ", trimmedEvents[0].from);
       currentSchedule.nextChange = trimmedEvents[0].from;
     } else if (
       trimmedEvents[0].from <= Date.now() &&

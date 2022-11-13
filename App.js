@@ -19,8 +19,8 @@ async function main() {
 
   // await Schedule.remove({}, null);
 
-  const newSchedule = Schedule(scheduleStub);
-  newSchedule.save();
+  // const newSchedule = Schedule(scheduleStub);
+  // newSchedule.save();
 
   app.listen(process.env.PORT, () =>
     console.log(`Example app listening on port ${process.env.PORT}!`)
@@ -71,6 +71,32 @@ const changeScheduleStatus = async (req, res) => {
   currentSchedule.save();
 
   return res.status(200).send("success!");
+};
+
+const flipEventStatus = async (req, res) => {
+  if (!req.body?.eventUUID) {
+    return res.status(400).send("missing 'eventUUID' parameter");
+  }
+
+  const schedule = await Schedule.findOne({ scheduleUUID: "1" });
+
+  if (!schedule) {
+    return res.status(400).send("Schedule not found");
+  }
+
+  let events = schedule.events;
+  for (i = 0; i < events.length; i++) {
+    if (events[i].eventUUID == req.body.eventUUID) {
+      switch (events[i].status) {
+        case "hush":
+          events[i].status = "free";
+          break;
+        case "free":
+          events[i].status = "hush";
+          break;
+      }
+    }
+  }
 };
 
 const changeEventStatus = async (req, res) => {
@@ -197,6 +223,7 @@ app.post("/schedule/flip-ghush", flipGHush);
 app.post("/schedule/flip-gfree", flipGFree);
 app.get("/schedule/get-current", getSchedule);
 app.post("/event/change-status", changeEventStatus);
+app.post("/event/flip-status", flipEventStatus);
 app.use("/", (req, res) => {
   console.log("Default route");
   res.send("Default route");

@@ -88,11 +88,11 @@ const flipEventStatus = async (req, res) => {
   for (i = 0; i < events.length; i++) {
     if (events[i].eventUUID == req.body.eventUUID) {
       switch (events[i].status) {
-        case "hush":
-          events[i].status = "free";
+        case "Hush":
+          events[i].status = "Free";
           break;
-        case "free":
-          events[i].status = "hush";
+        case "Free":
+          events[i].status = "Hush";
           break;
       }
     }
@@ -109,8 +109,8 @@ const changeEventStatus = async (req, res) => {
       .send("missing one or both parameters 'eventUUID', 'status'");
   }
 
-  if (req.body.status != "free" && req.body.status != "hush") {
-    return res.status(400).send("invalid status, specify 'free' or 'hush'");
+  if (req.body.status != "Free" && req.body.status != "Hush") {
+    return res.status(400).send("invalid status, specify 'Free' or 'Hush'");
   }
 
   const schedules = await Schedule.find({});
@@ -153,7 +153,7 @@ const refreshEvents = async function (req, res, next) {
   let previousEvent;
   if (trimmedEvents.length != 0) {
     if (trimmedEvents[0].from > Date.now()) {
-      currentSchedule.state = "free";
+      currentSchedule.state = "Free";
       currentSchedule.nextChange = trimmedEvents[0].from;
     } else if (
       trimmedEvents[0].from <= Date.now() &&

@@ -1,4 +1,0 @@
-runtime: nodejs16
-env_variables:
-  PORT: 8080
-  MONGO_URI: "mongodb://127.0.0.1:27017/"

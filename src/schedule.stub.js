@@ -3,8 +3,15 @@ module.exports = {
   state: "free",
   gFree: false,
   gHush: false,
-  nextChange: "1668366000000",
+  nextChange: "0",
   events: [
+    {
+      status: "hush",
+      from: "0",
+      to: "0",
+      title: "Doomer Hours",
+      eventUUID: "0",
+    },
     {
       status: "hush",
       from: "1668366000000",

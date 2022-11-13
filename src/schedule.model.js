@@ -3,15 +3,15 @@ const { Schema } = mongoose;
 
 const scheduleSchema = new Schema({
   scheduleUUID: String,
-  nextChange: String,
+  nextChange: Number,
   state: String,
   gFree: Boolean,
   gHush: Boolean,
   events: [
     {
       status: String,
-      from: String,
-      to: String,
+      from: Number,
+      to: Number,
       title: String,
       eventUUID: String,
     },

@@ -102,7 +102,7 @@ function getSchedule() {
   const schedules = Schedule.find({});
   const currentSchedule = schedules[schedules.length - 1];
 
-  return res.send(currentSchedule);
+  return currentSchedule;
 }
 
 function changeScheduleStatus() {

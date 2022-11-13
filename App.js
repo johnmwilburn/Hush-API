@@ -11,11 +11,7 @@ app.use(bodyParser.json());
 async function main() {
   await mongoose.connect(process.env.MONGO_URI);
 
-  Schedule.remove({}, getSchedule);
-  const doc = Schedule(scheduleStub);
-  doc.save();
-  changeEventStatus();
-  changeScheduleStatus();
+  // Schedule.remove({}, getSchedule);
 
   app.listen(process.env.PORT, () =>
     console.log(`Example app listening on port ${process.env.PORT}!`)

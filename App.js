@@ -32,7 +32,7 @@ async function main() {
     eventUUID: "blabla",
   };
   doc.events.push(event);
-  doc.save();
+  await doc.save();
 
   const schedules = await Schedule.find({});
   console.log(schedules);

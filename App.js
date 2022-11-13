@@ -1,15 +1,9 @@
 require("dotenv").config();
 const express = require("express");
-const bodyParser = require("body-parser");
-const swaggerJsdoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
 const mongoose = require("mongoose");
 const uri = "mongodb://127.0.0.1:27017/";
 
 const app = express();
-
-const specs = swaggerJsdoc(options);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.get("/", (req, res) => {
   return res.send("Received a GET HTTP method");

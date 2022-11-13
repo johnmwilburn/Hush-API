@@ -2,9 +2,11 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const scheduleSchema = new Schema({
-  totalHush: Boolean,
-  totalFree: Boolean,
   scheduleUUID: String,
+  nextChange: String,
+  state: String,
+  gFree: Boolean,
+  gHush: Boolean,
   events: [
     {
       status: String,

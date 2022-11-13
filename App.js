@@ -20,10 +20,9 @@ async function main() {
 
 const changeScheduleStatus = async (req, res) => {
   console.log("Received request for changeScheduleStatus");
-  const reqBody = { command: "hush" };
   console.log(req.body);
 
-  if (!reqBody?.command) {
+  if (!req.body?.command) {
     return res.status(400);
   }
 
@@ -34,7 +33,7 @@ const changeScheduleStatus = async (req, res) => {
     return res.status(400);
   }
 
-  switch (reqBody.command) {
+  switch (req.body.command) {
     case "hush":
       currentSchedule.totalHush = true;
       currentSchedule.totalFree = false;
@@ -50,11 +49,9 @@ const changeScheduleStatus = async (req, res) => {
       break;
   }
 
-  console.log("schedule STATUS", currentSchedule);
-
   currentSchedule.save();
 
-  return res.status(200).json(currentSchedule);
+  return res.status(200).send("success!");
 };
 
 const changeEventStatus = async (req, res) => {
@@ -83,7 +80,7 @@ const changeEventStatus = async (req, res) => {
 
   await Schedule.findOneAndUpdate({ scheduleUUID: 1 }, { events: events });
 
-  return res.status(200);
+  return res.status(200).send("success!");
 };
 
 const getSchedule = async (req, res) => {
@@ -94,8 +91,6 @@ const getSchedule = async (req, res) => {
   if (!currentSchedule) {
     return res.status(400);
   }
-
-  console.log("GET SCHEDULE", currentSchedule);
   return res.status(200).json(currentSchedule);
 };
 

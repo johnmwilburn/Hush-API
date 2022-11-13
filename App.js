@@ -32,6 +32,10 @@ const changeScheduleStatus = async (req, res) => {
   const schedules = await Schedule.find({});
   const currentSchedule = schedules[schedules.length - 1];
 
+  if (!currentSchedule) {
+    return console.log("bla error handling"); //res.status(400);
+  }
+
   switch (reqBody.command) {
     case "hush":
       currentSchedule.totalHush = true;
@@ -64,6 +68,11 @@ const changeEventStatus = async (req, res) => {
 
   const schedules = await Schedule.find({});
   const currentSchedule = schedules[schedules.length - 1];
+
+  if (!currentSchedule) {
+    return console.log("bla error handling"); //res.status(400);
+  }
+
   for (i = 0; i < currentSchedule.events.length; i++) {
     if (currentSchedule.events[i].eventUUID == reqBody.eventUUID) {
       currentSchedule.events[i].status = reqBody.status;
@@ -79,6 +88,11 @@ const changeEventStatus = async (req, res) => {
 const getSchedule = async (req, res) => {
   const schedules = await Schedule.find({});
   const currentSchedule = schedules[schedules.length - 1];
+
+  if (!currentSchedule) {
+    return console.log("bla error handling"); //res.status(400);
+  }
+
   console.log("GET SCHEDULE", currentSchedule);
   return currentSchedule;
 };

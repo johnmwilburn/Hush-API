@@ -13,7 +13,7 @@ const scheduleSchema = new Schema({
       from: Number,
       to: Number,
       title: String,
-      eventUUID: String,
+      eventUUID: Number,
     },
   ],
 });

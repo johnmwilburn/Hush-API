@@ -58,7 +58,7 @@ const changeScheduleStatus = async (req, res) => {
 };
 
 const changeEventStatus = async (req, res) => {
-  console.log("Received request for changEventStatus");
+  console.log("Received request for changeEventStatus");
   console.log(req.body);
 
   if (!(req.body?.eventUUID && req.body?.status)) {
@@ -77,12 +77,11 @@ const changeEventStatus = async (req, res) => {
     console.log(events[i].eventUUID);
     if (events[i].eventUUID == req.body.eventUUID) {
       events[i].status = req.body.status;
-      console.log("found it!");
       break;
     }
   }
 
-  Schedule.findOneAndUpdate({ scheduleUUID: 1 }, { events: events });
+  await Schedule.findOneAndUpdate({ scheduleUUID: 1 }, { events: events });
 
   return res.status(200);
 };

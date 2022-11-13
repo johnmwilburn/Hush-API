@@ -95,9 +95,9 @@ const getSchedule = async (req, res) => {
   return res.status(200).json(currentSchedule);
 };
 
-app.get("/schedule/get-current", (req, res) => getSchedule);
-app.post("/schedule/change-status", (req, res) => changeScheduleStatus);
-app.post("/event/change-status", (req, res) => changeEventStatus);
+app.get("/schedule/get-current", getSchedule);
+app.post("/schedule/change-status", changeScheduleStatus);
+app.post("/event/change-status", changeEventStatus);
 app.use("/", (req, res) => {
   console.log("response sent!");
   res.send("This the response!");

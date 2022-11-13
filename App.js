@@ -48,6 +48,8 @@ const changeScheduleStatus = async (req, res) => {
       break;
   }
 
+  console.log("schedule STATUS", currentSchedule);
+
   currentSchedule.save();
 
   return currentSchedule;
@@ -69,12 +71,15 @@ const changeEventStatus = async (req, res) => {
     }
   }
   currentSchedule.save();
+
+  console.log("EVENT STATUS", currentSchedule);
   return currentSchedule;
 };
 
 const getSchedule = async (req, res) => {
   const schedules = await Schedule.find({});
   const currentSchedule = schedules[schedules.length - 1];
+  console.log("GET SCHEDULE", currentSchedule);
   return currentSchedule;
 };
 

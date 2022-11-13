@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/johnmwilburn/Hush-API#readme",
   "devDependencies": {
+    "gh-pages": "^4.0.0",
     "nodemon": "^2.0.20"
   },
   "dependencies": {

@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 async function main() {
   await mongoose.connect(process.env.MONGO_URI);
 
-  Schedule.remove({}, getSchedule);
+  await Schedule.remove({}, null);
 
   const newSchedule = Schedule(scheduleStub);
   newSchedule.save();
@@ -146,8 +146,8 @@ const getSchedule = async (req, res) => {
   return res.status(200).json(currentSchedule);
 };
 
-app.get("/schedule/get-current", getSchedule);
 app.post("/schedule/change-status", changeScheduleStatus);
+app.get("/schedule/get-current", getSchedule);
 app.post("/event/change-status", changeEventStatus);
 app.use("/", (req, res) => {
   console.log("Default route");

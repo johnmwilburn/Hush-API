@@ -52,7 +52,7 @@ const changeScheduleStatus = async (req, res) => {
 
   currentSchedule.save();
 
-  return res.status(200).send(currentSchedule);
+  return res.status(200).json(currentSchedule);
 };
 
 const changeEventStatus = async (req, res) => {
@@ -77,7 +77,7 @@ const changeEventStatus = async (req, res) => {
   }
   currentSchedule.save();
 
-  return res.status(200).send(currentSchedule);
+  return res.status(200).json(currentSchedule);
 };
 
 const getSchedule = async (req, res) => {
@@ -89,7 +89,7 @@ const getSchedule = async (req, res) => {
   }
 
   console.log("GET SCHEDULE", currentSchedule);
-  return currentSchedule;
+  return res.status(200).json(currentSchedule);
 };
 
 app.get("/schedule/get-current", (req, res) => getSchedule);
@@ -98,7 +98,6 @@ app.post("/event/change-status", (req, res) => changeEventStatus);
 app.use("/", (req, res) => {
   console.log("response sent!");
   res.send("This the response!");
-  res.end();
 });
 
 main();

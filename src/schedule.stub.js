@@ -1,4 +1,7 @@
 module.exports = {
+  day: "11-12-2022",
+  totalFree: false,
+  totalHush: false,
   events: [
     {
       busy: true,
@@ -36,7 +39,7 @@ module.exports = {
       eventUUID: "E6EB6ap5NP",
     },
     {
-      busy: true,
+      busy: false,
       from: "5:00 PM",
       to: "10:00 PM",
       name: "Eliminate the Moon",

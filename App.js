@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const uri = "mongodb://127.0.0.1:27017/";
+const Schedule = require("./src/schedule.model");
 
 const app = express();
 
@@ -22,7 +22,20 @@ app.delete("/", (req, res) => {
 });
 
 async function main() {
-  mongoose.connect(uri);
+  await mongoose.connect(process.env.MONGO_URI);
+  const doc = new Schedule();
+  let event = {
+    busy: true,
+    from: "10:30",
+    to: "11:00",
+    name: "MyEvent",
+    eventUUID: "blabla",
+  };
+  doc.events.push(event);
+  doc.save();
+
+  const schedules = await Schedule.find({});
+  console.log(schedules);
 
   app.listen(process.env.PORT, () =>
     console.log(`Example app listening on port ${process.env.PORT}!`)

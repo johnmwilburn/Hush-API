@@ -19,8 +19,9 @@ async function main() {
 }
 
 const changeScheduleStatus = async (req, res) => {
-  console.log("Received request for changschedulestatus");
+  console.log("Received request for changeScheduleStatus");
   const reqBody = { command: "hush" };
+  console.log(req.body);
 
   if (!reqBody?.command) {
     return res.status(400);
@@ -59,6 +60,7 @@ const changeScheduleStatus = async (req, res) => {
 const changeEventStatus = async (req, res) => {
   console.log("Received request for changeventstatus");
   const reqBody = { eventUUID: "1", status: "busy" };
+  console.log(req.body);
 
   if (!(reqBody?.eventUUID && reqBody?.status)) {
     return res.status(400);
@@ -99,8 +101,8 @@ app.get("/schedule/get-current", getSchedule);
 app.post("/schedule/change-status", changeScheduleStatus);
 app.post("/event/change-status", changeEventStatus);
 app.use("/", (req, res) => {
-  console.log("response sent!");
-  res.send("This the response!");
+  console.log("Default route");
+  res.send("Default route");
 });
 
 main();

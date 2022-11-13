@@ -74,8 +74,10 @@ const changeEventStatus = async (req, res) => {
 
   let events = currentSchedule.events;
   for (i = 0; i < events.length; i++) {
+    console.log(events[i].eventUUID);
     if (events[i].eventUUID == req.body.eventUUID) {
       events[i].status = req.body.status;
+      console.log("found it!");
       break;
     }
   }

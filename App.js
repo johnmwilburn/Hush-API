@@ -58,11 +58,10 @@ const changeScheduleStatus = async (req, res) => {
 };
 
 const changeEventStatus = async (req, res) => {
-  console.log("Received request for changeventstatus");
-  const reqBody = { eventUUID: "1", status: "busy" };
+  console.log("Received request for changEventStatus");
   console.log(req.body);
 
-  if (!(reqBody?.eventUUID && reqBody?.status)) {
+  if (!(req.body?.eventUUID && req.body?.status)) {
     return res.status(400);
   }
 
@@ -75,8 +74,8 @@ const changeEventStatus = async (req, res) => {
 
   let events = currentSchedule.events;
   for (i = 0; i < events.length; i++) {
-    if (events[i].eventUUID == reqBody.eventUUID) {
-      events[i].status = reqBody.status;
+    if (events[i].eventUUID == req.body.eventUUID) {
+      events[i].status = req.body.status;
       break;
     }
   }

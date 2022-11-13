@@ -9,6 +9,11 @@ const dbURI = process.env.MONGO_URI;
 const app = express();
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+  console.log(req.body);
+  next();
+});
+
 async function main() {
   await mongoose.connect(dbURI, {
     useNewUrlParser: true,

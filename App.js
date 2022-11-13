@@ -19,8 +19,8 @@ async function main() {
 
   // await Schedule.remove({}, null);
 
-  // const newSchedule = Schedule(scheduleStub);
-  // newSchedule.save();
+  const newSchedule = Schedule(scheduleStub);
+  newSchedule.save();
 
   app.listen(process.env.PORT, () =>
     console.log(`Example app listening on port ${process.env.PORT}!`)
@@ -157,6 +157,28 @@ const refreshEvents = async function (req, res, next) {
   next();
 };
 
+const flipGHush = async (req, res) => {
+  const schedule = await Schedule.findOne({ scheduleUUID: "1" });
+
+  if (!schedule) {
+    return res.status(400).send("Schedule not found");
+  }
+
+  schedule.gHush = !schedule.gHush;
+  schedule.save();
+};
+
+const flipGFree = async (req, res) => {
+  const schedule = await Schedule.findOne({ scheduleUUID: "1" });
+
+  if (!schedule) {
+    return res.status(400).send("Schedule not found");
+  }
+
+  schedule.gFree = !schedule.gFree;
+  schedule.save();
+};
+
 const getSchedule = async (req, res) => {
   console.log("Received request for getSchedule");
 
@@ -171,6 +193,8 @@ const getSchedule = async (req, res) => {
 
 app.use(refreshEvents);
 app.post("/schedule/change-status", changeScheduleStatus);
+app.post("/schedule/flip-ghush", flipGHush);
+app.post("/schedule/flip-gfree", flipGFree);
 app.get("/schedule/get-current", getSchedule);
 app.post("/event/change-status", changeEventStatus);
 app.use("/", (req, res) => {

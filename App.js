@@ -91,6 +91,7 @@ const flipEventStatus = async (req, res) => {
   let events = schedule.events;
   for (i = 0; i < events.length; i++) {
     if (events[i].eventUUID == req.body.eventUUID) {
+      console.log(i, "switching this one");
       switch (events[i].status) {
         case "Hush":
           events[i].status = "Free";

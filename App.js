@@ -74,6 +74,7 @@ const changeScheduleStatus = async (req, res) => {
 };
 
 const flipEventStatus = async (req, res) => {
+  console.log(req.body);
   if (!req.body?.eventUUID) {
     return res.status(400).send("missing 'eventUUID' parameter");
   }
@@ -184,6 +185,7 @@ const refreshEvents = async function (req, res, next) {
 };
 
 const flipGHush = async (req, res) => {
+  console.log(req.body);
   const schedule = await Schedule.findOne({ scheduleUUID: "1" });
 
   if (!schedule) {
@@ -195,6 +197,7 @@ const flipGHush = async (req, res) => {
 };
 
 const flipGFree = async (req, res) => {
+  console.log(req.body);
   const schedule = await Schedule.findOne({ scheduleUUID: "1" });
 
   if (!schedule) {

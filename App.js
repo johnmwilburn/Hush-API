@@ -14,11 +14,6 @@ app.use(
 );
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  console.log(req.body);
-  next();
-});
-
 async function main() {
   await mongoose.connect(dbURI, {
     useNewUrlParser: true,
@@ -82,7 +77,7 @@ const changeScheduleStatus = async (req, res) => {
 };
 
 const flipEventStatus = async (req, res) => {
-  console.log(req.body);
+  console.log("flipEventStatus", req.body);
   if (!req.body?.eventUUID) {
     return res.status(400).send("missing 'eventUUID' parameter");
   }

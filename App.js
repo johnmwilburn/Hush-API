@@ -101,8 +101,8 @@ const changeEventStatus = async (req, res) => {
   return res.status(200).send("success!");
 };
 
-const getSchedule = async (req, res) => {
-  console.log("Received request for getSchedule");
+const refreshEvents = async function (req, res, next) {
+  console.log("Events Refreshed.");
   const schedules = await Schedule.find({});
   let currentSchedule = schedules[schedules.length - 1];
 
@@ -122,31 +122,48 @@ const getSchedule = async (req, res) => {
   if (trimmedEvents.length != 0) {
     if (trimmedEvents[0].from > Date.now()) {
       currentSchedule.state = "free";
-      console.log("Setting next change to: ", trimmedEvents[0].from);
       currentSchedule.nextChange = trimmedEvents[0].from;
     } else if (
       trimmedEvents[0].from <= Date.now() &&
       Date.now() < trimmedEvents[0].to
     ) {
-      currentSchedule.state = "hush";
+      currentSchedule.state = trimmedEvents[0].status;
       previousEvent = trimmedEvents[0];
       for (event of trimmedEvents) {
         if (event.from > previousEvent.to) {
           currentSchedule.nextChange = previousEvent.to;
           break;
         }
+        if (event.status != previousEvent.status) {
+          currentSchedule.nextChange = event.from;
+          break;
+        }
         previousEvent = event;
       }
     }
   }
-
+  currentSchedule.save();
   currentSchedule = await Schedule.findOneAndUpdate(
     { scheduleUUID: 1 },
     { events: trimmedEvents }
   );
-  return res.status(200).json(currentSchedule);
+
+  next();
 };
 
+const getSchedule = async (req, res) => {
+  console.log("Received request for getSchedule");
+
+  const schedule = await Schedule.findOne({ scheduleUUID: "1" });
+
+  if (!schedule) {
+    return res.status(400).send("Schedule not found");
+  }
+
+  return res.status(200).json(schedule);
+};
+
+app.use(refreshEvents);
 app.post("/schedule/change-status", changeScheduleStatus);
 app.get("/schedule/get-current", getSchedule);
 app.post("/event/change-status", changeEventStatus);

@@ -73,15 +73,17 @@ const changeEventStatus = async (req, res) => {
     return res.status(400);
   }
 
-  for (i = 0; i < currentSchedule.events.length; i++) {
-    if (currentSchedule.events[i].eventUUID == reqBody.eventUUID) {
-      currentSchedule.events[i].status = reqBody.status;
+  let events = currentSchedule.events;
+  for (i = 0; i < events.length; i++) {
+    if (events[i].eventUUID == reqBody.eventUUID) {
+      events[i].status = reqBody.status;
       break;
     }
   }
-  currentSchedule.save();
 
-  return res.status(200).json(currentSchedule);
+  Schedule.findOneAndUpdate({ scheduleUUID: 1 }, { events: events });
+
+  return res.status(200);
 };
 
 const getSchedule = async (req, res) => {

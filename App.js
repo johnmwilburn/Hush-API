@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 async function main() {
   await mongoose.connect(process.env.MONGO_URI);
 
-  DateTime.remove({}, getSchedule);
+  Schedule.remove({}, getSchedule);
   const doc = Schedule(scheduleStub);
   doc.save();
   changeEventStatus();

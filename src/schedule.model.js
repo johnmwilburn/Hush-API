@@ -7,7 +7,7 @@ const scheduleSchema = new Schema({
   scheduleUUID: String,
   events: [
     {
-      busy: String,
+      status: String,
       from: String,
       to: String,
       title: String,

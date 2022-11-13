@@ -11,10 +11,9 @@ app.use(bodyParser.json());
 async function main() {
   await mongoose.connect(process.env.MONGO_URI);
 
+  DateTime.remove({}, getSchedule);
   const doc = Schedule(scheduleStub);
   doc.save();
-
-  getSchedule();
   changeEventStatus();
   changeScheduleStatus();
 
@@ -27,14 +26,14 @@ const changeScheduleStatus = async (req, res) => {
   const reqBody = { command: "hush" };
 
   if (!reqBody?.command) {
-    return; //res.status(400);
+    return res.status(400);
   }
 
   const schedules = await Schedule.find({});
   const currentSchedule = schedules[schedules.length - 1];
 
   if (!currentSchedule) {
-    return; //res.status(400);
+    return res.status(400);
   }
 
   switch (reqBody.command) {
@@ -57,21 +56,21 @@ const changeScheduleStatus = async (req, res) => {
 
   currentSchedule.save();
 
-  return currentSchedule;
+  return res.send(currentSchedule);
 };
 
 const changeEventStatus = async (req, res) => {
   const reqBody = { eventUUID: "1", status: "busy" };
 
   if (!(reqBody?.eventUUID && reqBody?.status)) {
-    return; // res.status(400);
+    return res.status(400);
   }
 
   const schedules = await Schedule.find({});
   const currentSchedule = schedules[schedules.length - 1];
 
   if (!currentSchedule) {
-    return; //res.status(400);
+    return res.status(400);
   }
 
   for (i = 0; i < currentSchedule.events.length; i++) {
@@ -82,8 +81,7 @@ const changeEventStatus = async (req, res) => {
   }
   currentSchedule.save();
 
-  console.log("EVENT STATUS", currentSchedule);
-  return currentSchedule;
+  return res.send(currentSchedule);
 };
 
 const getSchedule = async (req, res) => {
@@ -91,7 +89,7 @@ const getSchedule = async (req, res) => {
   const currentSchedule = schedules[schedules.length - 1];
 
   if (!currentSchedule) {
-    return; //res.status(400);
+    return res.status(400);
   }
 
   console.log("GET SCHEDULE", currentSchedule);
